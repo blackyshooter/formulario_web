@@ -171,7 +171,6 @@ const $ = (id) => document.getElementById(id);
 
   function clearAll(){
     tbody().innerHTML="";
-    $("previewBox").textContent="— Generá vista previa —";
     setStatus("Estado: esperando validación…");
     $("btnExport").disabled = true;
   }
@@ -361,11 +360,19 @@ const $ = (id) => document.getElementById(id);
       $("btnExport").disabled = true;
     }
 
+    // Si hay errores/warnings, los mostramos en un alert (sin panel de vista previa).
     const details = []
       .concat(issues.map(x=>"ERROR: "+x))
       .concat(warnings.map(x=>"WARN:  "+x))
       .join("\n");
-    $("previewBox").textContent = details ? details : "Sin hallazgos.";
+
+    if(details){
+      // Evitamos spamear alerts en cada tecla: sólo cuando se presiona "Validar lote".
+      // Si querés, podés comentar este bloque.
+      if(document.activeElement && document.activeElement.tagName === "BUTTON"){
+        alert(details);
+      }
+    }
   }
 
   // ====== ALTA A–AH (34 columnas) ======
@@ -476,40 +483,6 @@ const $ = (id) => document.getElementById(id);
       const matnr18 = pad18(current.toString());
       return [matnr18, um, it.pvp].join("\t");
     }).join("\n");
-  }
-
-  function previewTxts(){
-    runValidations();
-    if($("btnExport").disabled){
-      setStatus("No se puede previsualizar: corregí errores y validá de nuevo.", "bad");
-      return;
-    }
-    const items = readItems();
-    const alta = buildALTA(items);
-    const reg  = buildREGWithMatnr(items);
-    const desc = buildDESCWithMatnr(items);
-    const zsd  = buildZSDCPFWithMatnr(items);
-
-    const take = (txt, n=6) => {
-      if(!txt) return "(vacío)";
-      const arr = txt.split("\n");
-      return arr.slice(0,n).join("\n") + (arr.length>n ? "\n..." : "");
-    };
-
-    $("previewBox").textContent =
-`[ALTA_${$("loteId").value}.txt]
-${take(alta, 6)}
-
-[REG_${$("loteId").value}.txt]
-${take(reg, 6)}
-
-[DESC_${$("loteId").value}.txt] (opcional)
-${desc ? take(desc, 6) : "(no se genera porque no hay descuentos cargados)"}
-
-[ZSDCPF_${$("loteId").value}.txt]
-${take(zsd, 6)}
-`;
-    setStatus("Vista previa generada. Si está OK, exportá los TXT.", "ok");
   }
 
   function exportAll(){
