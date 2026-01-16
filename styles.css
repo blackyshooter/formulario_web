@@ -12,7 +12,7 @@
                   var(--bg);
       color:var(--txt);
     }
-    .wrap{ max-width:1400px; margin:28px auto; padding:0 16px 40px; }
+    .wrap{ max-width:1800px; margin:28px auto; padding:0 16px 40px; }
     .topbar{
       display:flex; gap:14px; align-items:center; justify-content:space-between;
       padding:16px 18px; border:1px solid var(--line); border-radius:var(--radius);
@@ -32,21 +32,13 @@
       border-radius:999px; border:1px solid var(--line); color:var(--muted);
       font-size:12px;
     }
-    /* Layout */
-    .gridTop{
-      display:flex;
-      justify-content:flex-start;
-      gap:16px;
-      margin-top:16px;
+    .grid{
+      display:grid; grid-template-columns: 1.05fr .95fr;
+      gap:16px; margin-top:16px;
     }
-    /* Config más angosto para que no “robe” pantalla */
-    .cardConfig{
-      width: min(620px, 100%);
-    }
-    @media (max-width: 980px){
-      .gridTop{ flex-direction:column; }
-      .cardConfig{ width:100%; }
-    }
+    /* Cabecera más compacta (no ocupa toda la pantalla) */
+    .grid.single{ grid-template-columns: minmax(420px, 760px); justify-content:start; }
+    @media (max-width: 980px){ .grid{ grid-template-columns: 1fr; } }
     .card{
       border:1px solid var(--line); border-radius:var(--radius);
       background: linear-gradient(180deg, rgba(17,26,46,.92), rgba(17,26,46,.70));
@@ -72,16 +64,11 @@
       background: rgba(6,10,20,.55); color:var(--txt);
       outline:none;
     }
-    input:focus, select:focus{
-      border-color: rgba(77,163,255,.55);
-      box-shadow: 0 0 0 3px rgba(77,163,255,.15);
-    }
     input::placeholder{ color: rgba(159,176,208,.55); }
     .hint{ margin-top:6px; font-size:11px; color:var(--muted); }
     .req{ color:#ffd1d1; }
 
     .actions{ display:flex; gap:10px; flex-wrap:wrap; margin-top:14px; }
-    .spacer{ flex:1; }
     button{
       border:0; cursor:pointer;
       padding:10px 12px; border-radius:12px; font-weight:650;
@@ -96,34 +83,61 @@
     }
     button:disabled{ opacity:.5; cursor:not-allowed; }
 
-    /* Tabla de ítems: más legible y con menos necesidad de “slider” */
-    table{ width:100%; border-collapse:collapse; font-size:12px; }
-    .itemsTable{ table-layout:fixed; }
-    th, td{ border-bottom:1px solid rgba(255,255,255,.08); padding:8px 8px; text-align:left; vertical-align:top; }
-    th{ color:var(--muted); font-weight:700; font-size:11px; letter-spacing:.2px; }
+    table{ width:100%; border-collapse:collapse; font-size:13px; }
+    th, td{ border-bottom:1px solid rgba(255,255,255,.08); padding:10px 8px; text-align:left; }
+    th{ color:var(--muted); font-weight:700; }
     .tableWrap{
       overflow:auto;
       border:1px solid rgba(255,255,255,.10);
       border-radius:14px;
-      background: rgba(6,10,20,.18);
+      /* Querés ver bien lo que estás cargando */
+      min-height: 320px;
+      max-height: 55vh;
+      background: rgba(0,0,0,.12);
     }
-    .tableWrapFull{ max-height: 46vh; }
-    .itemsTable thead th{
+
+    /* ===== Tabla de ítems: que se vea lo que estás cargando ===== */
+    #itemsTable th{
       position: sticky;
       top: 0;
-      background: rgba(17,26,46,.96);
       z-index: 2;
+      background: rgba(10,16,30,.92);
+      backdrop-filter: blur(6px);
+      white-space: normal;
+      line-height: 1.15;
+      font-size: 13px;
     }
-    .itemsTable tbody tr:nth-child(odd){ background: rgba(255,255,255,.02); }
-    .itemsTable input, .itemsTable select{
-      padding:8px 10px;
-      border-radius:10px;
-      background: rgba(6,10,20,.62);
+    #itemsTable td{ vertical-align: top; }
+    #itemsTable input,
+    #itemsTable select{
+      min-width: 150px;
+      padding: 10px 12px;
+      font-size: 14px;
+      border-radius: 12px;
+      background: rgba(255,255,255,.06);
+      border: 1px solid rgba(255,255,255,.18);
+      color: var(--txt);
     }
-    /* Reducimos mínimos para que quepa más sin scroll horizontal */
-    .itemsTable th, .itemsTable td{ min-width: 86px; }
-    .itemsTable th:nth-child(2), .itemsTable td:nth-child(2){ min-width: 190px; }
-    .itemsTable th:nth-child(3), .itemsTable td:nth-child(3){ min-width: 140px; }
+    #itemsTable input:focus,
+    #itemsTable select:focus{
+      outline: 2px solid rgba(77,163,255,.45);
+      outline-offset: 1px;
+    }
+    /* Campos más importantes un poco más anchos */
+    #itemsTable th:nth-child(2),
+    #itemsTable td:nth-child(2) input{ min-width: 260px; }
+    #itemsTable th:nth-child(3),
+    #itemsTable td:nth-child(3) input{ min-width: 170px; }
+    #itemsTable th:nth-child(16),
+    #itemsTable td:nth-child(16) select{ min-width: 130px; }
+
+    /* Botones dentro de tabla */
+    #itemsTable .rowBtn{
+      min-width: 88px;
+      padding: 10px 10px;
+      font-size: 13px;
+      border-radius: 12px;
+    }
     .toast{
       margin-top:10px; padding:10px 12px; border-radius:12px;
       border:1px solid rgba(255,255,255,.12);

@@ -286,7 +286,7 @@ const $ = (id) => document.getElementById(id);
     });
   }
 
-  function runValidations(){
+  function runValidations(showAlert=false){
     const issues = [];
     const warnings = [];
 
@@ -352,12 +352,16 @@ const $ = (id) => document.getElementById(id);
       }
     });
 
-    if(issues.length===0){
+    const ok = issues.length===0;
+
+    // Habilitar export SOLO si no hay errores bloqueantes
+    const btnExport = $("btnExport");
+    if(btnExport) btnExport.disabled = !ok;
+
+    if(ok){
       setStatus(`✅ Validación OK. Warnings: ${warnings.length}. Ya podés exportar.`, "ok");
-      $("btnExport").disabled = false;
     }else{
       setStatus(`❌ Hay ${issues.length} errores bloqueantes. Corregí antes de exportar.`, "bad");
-      $("btnExport").disabled = true;
     }
 
     // Si hay errores/warnings, los mostramos en un alert (sin panel de vista previa).
@@ -366,13 +370,9 @@ const $ = (id) => document.getElementById(id);
       .concat(warnings.map(x=>"WARN:  "+x))
       .join("\n");
 
-    if(details){
-      // Evitamos spamear alerts en cada tecla: sólo cuando se presiona "Validar lote".
-      // Si querés, podés comentar este bloque.
-      if(document.activeElement && document.activeElement.tagName === "BUTTON"){
-        alert(details);
-      }
-    }
+    if(showAlert && details) alert(details);
+
+    return { ok, issues, warnings };
   }
 
   // ====== ALTA A–AH (34 columnas) ======
@@ -486,8 +486,8 @@ const $ = (id) => document.getElementById(id);
   }
 
   function exportAll(){
-    runValidations();
-    if($("btnExport").disabled) return;
+    const res = runValidations(true);
+    if(!res.ok) return;
 
     const lote = $("loteId").value.trim() || "LOTE";
     const items = readItems();

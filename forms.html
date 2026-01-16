@@ -23,10 +23,9 @@
     </div>
   </div>
 
-  <!-- TOP: configuración (más angosto) -->
-  <div class="gridTop">
-    <!-- CONFIG -->
-    <div class="card cardConfig">
+  <!-- CONFIG -->
+  <div class="grid single">
+    <div class="card">
       <header>
         <h2>Cabecera / Configuración</h2>
         <span>Constantes + correlativos</span>
@@ -86,72 +85,74 @@
         <div id="statusBox" class="toast">Estado: esperando validación…</div>
       </div>
     </div>
-
   </div>
 
-  <!-- BOTTOM: ítems (ancho completo) -->
+  <!-- ITEMS (abajo, full width) -->
   <div class="card" style="margin-top:16px;">
-    <header>
-      <h2>Ítems del lote</h2>
-      <span>REG corregido + DESC opcional</span>
-    </header>
-    <div class="body">
-      <div class="actions" style="margin-top:0;">
-        <button onclick="addRow()">+ Agregar ítem</button>
-        <button class="danger" onclick="clearAll()">Limpiar</button>
-        <div class="spacer"></div>
-        <button id="btnExport" onclick="exportAll()" disabled>Exportar TXT</button>
+      <header>
+        <h2>Ítems del lote</h2>
+        <span>REG corregido + DESC opcional</span>
+      </header>
+      <div class="body">
+        <div class="actions" style="margin-top:0;">
+          <button onclick="addRow()">+ Agregar ítem</button>
+          <button class="danger" onclick="clearAll()">Limpiar</button>
+        </div>
+
+        <div class="hint" style="margin-top:10px;">
+          <b>REG (15 columnas TAB):</b> LIFNR, MATNR(sin ceros), 1000,0,X,3,EKGRP,1,0004,MWSKZ,NETPR,WAERS,1,UN,1
+          <br/>
+          <b>DESC:</b> Proveedor TAB Material(sin ceros) TAB 1000 TAB ddmmyyyy TAB descuentoEntero (si se carga).
+        </div>
+
+        <div class="tableWrap" style="margin-top:12px;">
+          <table id="itemsTable">
+            <thead>
+              <tr>
+                <!-- ALTA -->
+                <th>MATKL</th>
+                <th>Descripción (≤40)</th>
+                <th>EAN</th>
+                <th>Fiscal (K)</th>
+                <th>Val. (L)</th>
+                <th>Alm. (N)</th>
+                <th>Temp (O)</th>
+                <th>Grupo carga (R)</th>
+                <th>Factor fij. (S)</th>
+                <th>Marca (T)</th>
+                <th>Art. antiguo (U)</th>
+                <th>¿Droga?</th>
+                <th>Cód droga (W)</th>
+                <th>Fabricante (Y)</th>
+                <th>Origen (AE)</th>
+                <th>BRT/NET (AF)</th>
+
+                <!-- REG -->
+                <th>Proveedor (REG) B</th>
+                <th>EKGRP (REG) H</th>
+                <th>MWSKZ (REG) K</th>
+                <th>NETPR (REG) L</th>
+                <th>WAERS (REG) M</th>
+
+                <!-- ZSDCPF -->
+                <th>PVP c/IVA (ZSDCPF)</th>
+
+                <!-- DESC opcional -->
+                <th>Descuento (entero)</th>
+                <th>Desde (ddmmyyyy)</th>
+
+                <th></th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+
+        <div class="actions" style="margin-top:12px;">
+          <!-- Exporta ALTA/REG/(DESC si aplica)/ZSDCPF como .txt TAB UTF-8 -->
+          <button id="btnExport" class="primary" onclick="exportAll()">Exportar TXT</button>
+        </div>
       </div>
-
-      <div class="hint" style="margin-top:10px;">
-        <b>REG (15 columnas TAB):</b> LIFNR, MATNR(sin ceros), 1000,0,X,3,EKGRP,1,0004,MWSKZ,NETPR,WAERS,1,UN,1
-        <br/>
-        <b>DESC:</b> Proveedor TAB Material(sin ceros) TAB 1000 TAB ddmmyyyy TAB descuentoEntero (si se carga).
-      </div>
-
-      <div class="tableWrap tableWrapFull" style="margin-top:12px;">
-        <table id="itemsTable" class="itemsTable">
-          <thead>
-            <tr>
-              <!-- ALTA -->
-              <th>MATKL</th>
-              <th>Descripción (≤40)</th>
-              <th>EAN</th>
-              <th>Fiscal (K)</th>
-              <th>Val. (L)</th>
-              <th>Alm. (N)</th>
-              <th>Temp (O)</th>
-              <th>Grupo carga (R)</th>
-              <th>Factor fij. (S)</th>
-              <th>Marca (T)</th>
-              <th>Art. ant. (U)</th>
-              <th>¿Droga?</th>
-              <th>Cód droga (W)</th>
-              <th>Fabricante (Y)</th>
-              <th>Origen (AE)</th>
-              <th>BRT/NET (AF)</th>
-
-              <!-- REG -->
-              <th>Proveedor (REG)</th>
-              <th>EKGRP</th>
-              <th>MWSKZ</th>
-              <th>NETPR</th>
-              <th>WAERS</th>
-
-              <!-- ZSDCPF -->
-              <th>PVP c/IVA</th>
-
-              <!-- DESC opcional -->
-              <th>Desc.</th>
-              <th>Desde</th>
-
-              <th></th>
-            </tr>
-          </thead>
-          <tbody></tbody>
-        </table>
-      </div>
-    </div>
   </div>
 </div>
 </body>
