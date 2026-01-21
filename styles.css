@@ -96,6 +96,53 @@
       background: rgba(0,0,0,.12);
     }
 
+    /* =========================================================
+       ✅ MODO VERTICAL para Ítems (sin scroll horizontal)
+       Mantiene la tabla y el JS actual, pero renderiza cada fila
+       como una “card” con campos apilados.
+    ========================================================= */
+    .tableWrap.vertical{ overflow-x:hidden; }
+    .tableWrap.vertical table{ border-collapse:separate; border-spacing:0; }
+    .tableWrap.vertical thead{ display:none; }
+
+    .tableWrap.vertical tbody,
+    .tableWrap.vertical tr,
+    .tableWrap.vertical td{ display:block; width:100%; }
+
+    .tableWrap.vertical tr{
+      border:1px solid rgba(255,255,255,.10);
+      border-radius:16px;
+      background: rgba(6,10,20,.35);
+      padding:12px;
+      margin:12px;
+    }
+
+    .tableWrap.vertical td{
+      border:0;
+      padding:8px 6px;
+      display:flex;
+      flex-direction:column;
+      gap:6px;
+    }
+
+    .tableWrap.vertical td::before{
+      content: attr(data-label);
+      color: var(--muted);
+      font-size:12px;
+      font-weight:700;
+      letter-spacing:.2px;
+    }
+
+    .tableWrap.vertical #itemsTable input,
+    .tableWrap.vertical #itemsTable select{
+      min-width: 0;   /* 🔥 mata el scroll horizontal */
+      width: 100%;
+    }
+
+    .tableWrap.vertical #itemsTable .rowBtn{
+      width: 100%;
+    }
+
     /* ===== Tabla de ítems: que se vea lo que estás cargando ===== */
     #itemsTable th{
       position: sticky;

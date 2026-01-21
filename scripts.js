@@ -1,5 +1,39 @@
-const $ = (id) => document.getElementById(id);
+  const $ = (id) => document.getElementById(id);
   const tbody = () => $("itemsTable").querySelector("tbody");
+
+  // Labels (mismo orden del THEAD / addRow). Se usan en el modo vertical.
+  const COL_LABELS = [
+    // ALTA
+    "MATKL",
+    "Descripción (≤40)",
+    "EAN",
+    "Fiscal (K)",
+    "Val. (L)",
+    "Alm. (N)",
+    "Temp (O)",
+    "Grupo carga (R)",
+    "Factor fij. (S)",
+    "Marca (T)",
+    "Art. antiguo (U)",
+    "¿Droga?",
+    "Cód droga (W)",
+    "Fabricante (Y)",
+    "Origen (AE)",
+    "BRT/NET (AF)",
+    // REG
+    "Proveedor (REG)",
+    "EKGRP (REG)",
+    "MWSKZ (REG)",
+    "NETPR (REG)",
+    "WAERS (REG)",
+    // ZSDCPF
+    "PVP c/IVA (ZSDCPF)",
+    // DESC
+    "Descuento (entero)",
+    "Desde (ddmmyyyy)",
+    // acciones
+    "Acciones"
+  ];
 
   function downloadTxt(filename, content){
     const blob = new Blob([content], {type:"text/plain;charset=utf-8"});
@@ -47,8 +81,9 @@ const $ = (id) => document.getElementById(id);
     });
     return s;
   }
-  function tdWrap(el){
+  function tdWrap(el, label=""){
     const td=document.createElement("td");
+    if(label) td.dataset.label = label;
     td.appendChild(el);
     return td;
   }
@@ -159,35 +194,35 @@ const $ = (id) => document.getElementById(id);
     delBtn.onclick=()=>tr.remove();
 
     // Append en el mismo orden del THEAD
-    tr.appendChild(tdWrap(matkl));
-    tr.appendChild(tdWrap(desc));
-    tr.appendChild(tdWrap(ean));
-    tr.appendChild(tdWrap(fiscal));
-    tr.appendChild(tdWrap(valor));
-    tr.appendChild(tdWrap(almacen));
-    tr.appendChild(tdWrap(temp));
-    tr.appendChild(tdWrap(grupoCarga));
-    tr.appendChild(tdWrap(factor));
-    tr.appendChild(tdWrap(marca));
-    tr.appendChild(tdWrap(artAnt));
-    tr.appendChild(tdWrap(tieneDroga));
-    tr.appendChild(tdWrap(codDroga));
-    tr.appendChild(tdWrap(fabricante));
-    tr.appendChild(tdWrap(origen));
-    tr.appendChild(tdWrap(brtNet));
+    tr.appendChild(tdWrap(matkl, COL_LABELS[0]));
+    tr.appendChild(tdWrap(desc, COL_LABELS[1]));
+    tr.appendChild(tdWrap(ean, COL_LABELS[2]));
+    tr.appendChild(tdWrap(fiscal, COL_LABELS[3]));
+    tr.appendChild(tdWrap(valor, COL_LABELS[4]));
+    tr.appendChild(tdWrap(almacen, COL_LABELS[5]));
+    tr.appendChild(tdWrap(temp, COL_LABELS[6]));
+    tr.appendChild(tdWrap(grupoCarga, COL_LABELS[7]));
+    tr.appendChild(tdWrap(factor, COL_LABELS[8]));
+    tr.appendChild(tdWrap(marca, COL_LABELS[9]));
+    tr.appendChild(tdWrap(artAnt, COL_LABELS[10]));
+    tr.appendChild(tdWrap(tieneDroga, COL_LABELS[11]));
+    tr.appendChild(tdWrap(codDroga, COL_LABELS[12]));
+    tr.appendChild(tdWrap(fabricante, COL_LABELS[13]));
+    tr.appendChild(tdWrap(origen, COL_LABELS[14]));
+    tr.appendChild(tdWrap(brtNet, COL_LABELS[15]));
 
-    tr.appendChild(tdWrap(regProveedor));
-    tr.appendChild(tdWrap(regEkgrp));
-    tr.appendChild(tdWrap(regMwsKz));
-    tr.appendChild(tdWrap(regNetpr));
-    tr.appendChild(tdWrap(regWaers));
+    tr.appendChild(tdWrap(regProveedor, COL_LABELS[16]));
+    tr.appendChild(tdWrap(regEkgrp, COL_LABELS[17]));
+    tr.appendChild(tdWrap(regMwsKz, COL_LABELS[18]));
+    tr.appendChild(tdWrap(regNetpr, COL_LABELS[19]));
+    tr.appendChild(tdWrap(regWaers, COL_LABELS[20]));
 
-    tr.appendChild(tdWrap(pvp));
+    tr.appendChild(tdWrap(pvp, COL_LABELS[21]));
 
-    tr.appendChild(tdWrap(descInt));
-    tr.appendChild(tdWrap(descDesde));
+    tr.appendChild(tdWrap(descInt, COL_LABELS[22]));
+    tr.appendChild(tdWrap(descDesde, COL_LABELS[23]));
 
-    tr.appendChild(tdWrap(delBtn));
+    tr.appendChild(tdWrap(delBtn, COL_LABELS[24]));
 
     tbody().appendChild(tr);
   }
@@ -581,8 +616,9 @@ const $ = (id) => document.getElementById(id);
     });
     return s;
   }
-  function tdWrap(el){
+  function tdWrap(el, label=""){
     const td=document.createElement("td");
+    if(label) td.dataset.label = label;
     td.appendChild(el);
     return td;
   }
@@ -669,36 +705,36 @@ const $ = (id) => document.getElementById(id);
     delBtn.className="secondary";
     delBtn.onclick=()=>tr.remove();
 
-    // Append en el mismo orden del THEAD
-    tr.appendChild(tdWrap(matkl));
-    tr.appendChild(tdWrap(desc));
-    tr.appendChild(tdWrap(ean));
-    tr.appendChild(tdWrap(fiscal));
-    tr.appendChild(tdWrap(valor));
-    tr.appendChild(tdWrap(almacen));
-    tr.appendChild(tdWrap(temp));
-    tr.appendChild(tdWrap(grupoCarga));
-    tr.appendChild(tdWrap(factor));
-    tr.appendChild(tdWrap(marca));
-    tr.appendChild(tdWrap(artAnt));
-    tr.appendChild(tdWrap(tieneDroga));
-    tr.appendChild(tdWrap(codDroga));
-    tr.appendChild(tdWrap(fabricante));
-    tr.appendChild(tdWrap(origen));
-    tr.appendChild(tdWrap(brtNet));
+    // Append en el mismo orden del THEAD (y labels para modo vertical)
+    tr.appendChild(tdWrap(matkl, COL_LABELS[0]));
+    tr.appendChild(tdWrap(desc, COL_LABELS[1]));
+    tr.appendChild(tdWrap(ean, COL_LABELS[2]));
+    tr.appendChild(tdWrap(fiscal, COL_LABELS[3]));
+    tr.appendChild(tdWrap(valor, COL_LABELS[4]));
+    tr.appendChild(tdWrap(almacen, COL_LABELS[5]));
+    tr.appendChild(tdWrap(temp, COL_LABELS[6]));
+    tr.appendChild(tdWrap(grupoCarga, COL_LABELS[7]));
+    tr.appendChild(tdWrap(factor, COL_LABELS[8]));
+    tr.appendChild(tdWrap(marca, COL_LABELS[9]));
+    tr.appendChild(tdWrap(artAnt, COL_LABELS[10]));
+    tr.appendChild(tdWrap(tieneDroga, COL_LABELS[11]));
+    tr.appendChild(tdWrap(codDroga, COL_LABELS[12]));
+    tr.appendChild(tdWrap(fabricante, COL_LABELS[13]));
+    tr.appendChild(tdWrap(origen, COL_LABELS[14]));
+    tr.appendChild(tdWrap(brtNet, COL_LABELS[15]));
 
-    tr.appendChild(tdWrap(regProveedor));
-    tr.appendChild(tdWrap(regEkgrp));
-    tr.appendChild(tdWrap(regMwsKz));
-    tr.appendChild(tdWrap(regNetpr));
-    tr.appendChild(tdWrap(regWaers));
+    tr.appendChild(tdWrap(regProveedor, COL_LABELS[16]));
+    tr.appendChild(tdWrap(regEkgrp, COL_LABELS[17]));
+    tr.appendChild(tdWrap(regMwsKz, COL_LABELS[18]));
+    tr.appendChild(tdWrap(regNetpr, COL_LABELS[19]));
+    tr.appendChild(tdWrap(regWaers, COL_LABELS[20]));
 
-    tr.appendChild(tdWrap(pvp));
+    tr.appendChild(tdWrap(pvp, COL_LABELS[21]));
 
-    tr.appendChild(tdWrap(descInt));
-    tr.appendChild(tdWrap(descDesde));
+    tr.appendChild(tdWrap(descInt, COL_LABELS[22]));
+    tr.appendChild(tdWrap(descDesde, COL_LABELS[23]));
 
-    tr.appendChild(tdWrap(delBtn));
+    tr.appendChild(tdWrap(delBtn, COL_LABELS[24]));
 
     tbody().appendChild(tr);
   }
