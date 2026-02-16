@@ -49,7 +49,7 @@
       padding:14px 16px; border-bottom:1px solid var(--line);
       display:flex; align-items:center; justify-content:space-between;
     }
-    .card header h2{ margin:0; font-size:14px; }
+    .card header h2{margin:0;font-size:14px;color:#eaf0ff;font-weight:800;letter-spacing:.2px}
     .card header span{ color:var(--muted); font-size:12px; }
     .card .body{ padding:16px; }
 
@@ -94,53 +94,6 @@
       min-height: 320px;
       max-height: 55vh;
       background: rgba(0,0,0,.12);
-    }
-
-    /* =========================================================
-       ✅ MODO VERTICAL para Ítems (sin scroll horizontal)
-       Mantiene la tabla y el JS actual, pero renderiza cada fila
-       como una “card” con campos apilados.
-    ========================================================= */
-    .tableWrap.vertical{ overflow-x:hidden; }
-    .tableWrap.vertical table{ border-collapse:separate; border-spacing:0; }
-    .tableWrap.vertical thead{ display:none; }
-
-    .tableWrap.vertical tbody,
-    .tableWrap.vertical tr,
-    .tableWrap.vertical td{ display:block; width:100%; }
-
-    .tableWrap.vertical tr{
-      border:1px solid rgba(255,255,255,.10);
-      border-radius:16px;
-      background: rgba(6,10,20,.35);
-      padding:12px;
-      margin:12px;
-    }
-
-    .tableWrap.vertical td{
-      border:0;
-      padding:8px 6px;
-      display:flex;
-      flex-direction:column;
-      gap:6px;
-    }
-
-    .tableWrap.vertical td::before{
-      content: attr(data-label);
-      color: var(--muted);
-      font-size:12px;
-      font-weight:700;
-      letter-spacing:.2px;
-    }
-
-    .tableWrap.vertical #itemsTable input,
-    .tableWrap.vertical #itemsTable select{
-      min-width: 0;   /* 🔥 mata el scroll horizontal */
-      width: 100%;
-    }
-
-    .tableWrap.vertical #itemsTable .rowBtn{
-      width: 100%;
     }
 
     /* ===== Tabla de ítems: que se vea lo que estás cargando ===== */
@@ -191,6 +144,31 @@
       background: rgba(6,10,20,.45);
       color:var(--muted); font-size:12px;
     }
+
+/* =====================
+   ERRORES / WARNINGS
+   ===================== */
+.errors{
+  margin-top:10px;
+  padding:12px;
+  border-radius:14px;
+  border:1px solid rgba(255,255,255,.12);
+  background: rgba(6,10,20,.55);
+  color: rgba(235,245,255,.92);
+  font-size:12px;
+}
+.errors .sum{ color: var(--muted); font-size:12px; margin-bottom:8px; }
+.errors ul{ margin:0; padding-left:18px; }
+.errors li{ margin:4px 0; line-height:1.25; }
+.errors li.err{ color: rgba(255,210,210,.95); }
+.errors li.warn{ color: rgba(255,240,200,.95); }
+
+/* Highlight inputs con error */
+.field-err{
+  border-color: rgba(239,68,68,.65) !important;
+  box-shadow: 0 0 0 2px rgba(239,68,68,.18);
+}
+.row-err{ outline: 2px solid rgba(239,68,68,.18); outline-offset: -2px; border-radius: 12px; }
     .codebox{
       margin-top:12px;
       padding:12px;
@@ -203,3 +181,280 @@
       overflow:auto;
       max-height:300px;
     }
+
+/* ================================
+   NUEVO: Solicitud + Items vertical
+==================================*/
+.topbar{
+  display:flex; align-items:center; justify-content:space-between;
+  gap:14px; flex-wrap:wrap;
+}
+.brand{ display:flex; align-items:center; gap:12px; min-width: 320px; }
+.sap-badge{
+  width:38px; height:38px; border-radius:12px;
+  display:grid; place-items:center; font-weight:800;
+  background: linear-gradient(135deg, rgba(77,163,255,.35), rgba(40,225,145,.25));
+  border:1px solid rgba(255,255,255,.12);
+  color:#dff2ff;
+}
+.title h1{ margin:0; font-size:16px; }
+.top-pills{ display:flex; gap:10px; flex-wrap:wrap; align-items:center; justify-content:flex-end; }
+
+.row4{
+  display:grid;
+  grid-template-columns: minmax(200px, 1.5fr) minmax(140px, 0.8fr) minmax(280px, 2fr) auto;
+  gap:14px;
+  align-items:end;
+}
+.row4 > div{
+  display:flex;
+  flex-direction:column;
+}
+.row4 label{
+  margin-bottom:6px;
+}
+@media (max-width: 980px){
+  .row4{ grid-template-columns: 1fr; }
+}
+
+.btnCol .btnGroup{
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+  justify-content:flex-end;
+}
+.btnCol .btnGroup .btn{
+  border-radius: 12px;
+  padding: 8px 12px;
+  font-weight: 700;
+}
+
+/* Tarjetas de ítems */
+.itemsList{
+  margin-top:12px;
+  display:flex;
+  flex-direction:column;
+  gap:12px;
+}
+.itemCard{
+  border:1px solid rgba(255,255,255,.10);
+  background: rgba(10,16,30,.52);
+  border-radius: 16px;
+  padding: 12px;
+  box-shadow: 0 10px 30px rgba(0,0,0,.25);
+}
+.itemGrid{
+  display:grid;
+  grid-template-columns: repeat(9, minmax(160px, 1fr));
+  gap:10px 12px;
+  align-items:end;
+}
+@media (max-width: 1400px){
+  .itemGrid{ grid-template-columns: repeat(4, minmax(160px, 1fr)); }
+}
+@media (max-width: 900px){
+  .itemGrid{ grid-template-columns: repeat(2, minmax(160px, 1fr)); }
+}
+@media (max-width: 720px){
+  .itemGrid{ grid-template-columns: repeat(1, minmax(160px, 1fr)); }
+}
+
+.itemGrid .field{ display:grid; gap:6px; }
+.itemGrid .field label{
+  font-size: 12px;
+  color: rgba(159,176,208,.9);
+}
+
+/* FIX choque descripción / EAN:
+   aseguramos que inputs ocupen su celda y no se monten */
+.itemGrid input, .itemGrid select{
+  width:100%;
+  min-width: 0;
+}
+.itemGrid .wide2{ grid-column: span 2; }
+@media (max-width: 1200px){
+  .itemGrid .wide2{ grid-column: span 1; }
+}
+
+.footerActions{
+  margin-top:14px;
+  display:flex;
+  justify-content:flex-start;
+}
+
+/* Píldoras (fecha, etc) */
+.pill{
+  padding:8px 12px;
+  border-radius: 999px;
+  background: rgba(255,255,255,.06);
+  border:1px solid rgba(255,255,255,.12);
+  color:#dbe7ff;
+  font-size:12px;
+}
+
+/* Modal: aseguramos overlay correcto */
+.modalWrap[aria-hidden="true"]{ display:none; }
+.modalWrap[aria-hidden="false"]{ display:flex; }
+
+
+
+/* ===========================
+   MODAL - Pegado desde Excel
+   (overlay centrado y usable)
+============================ */
+.modalWrap{
+  position:fixed;
+  inset:0;
+  z-index:9999;
+  background: rgba(0,0,0,.55);
+  backdrop-filter: blur(4px);
+  align-items:center;
+  justify-content:center;
+  padding:16px;
+}
+.modalCard{
+  width:min(920px, 96vw);
+  background: linear-gradient(180deg, rgba(17,26,46,.96), rgba(17,26,46,.78));
+  border:1px solid rgba(255,255,255,.14);
+  border-radius:16px;
+  box-shadow: 0 24px 80px rgba(0,0,0,.55);
+  overflow:hidden;
+}
+.modalHead{
+  display:flex;
+  align-items:flex-start;
+  justify-content:space-between;
+  gap:12px;
+  padding:14px 16px;
+  border-bottom:1px solid rgba(255,255,255,.10);
+}
+.modalHead h3{
+  margin:0;
+  font-size:14px;
+  letter-spacing:.2px;
+}
+.modalHead p{
+  margin:4px 0 0;
+  font-size:12px;
+  color: var(--muted);
+}
+.xBtn{
+  width:34px;
+  height:34px;
+  border-radius:10px;
+  border:1px solid rgba(255,255,255,.12);
+  background: rgba(255,255,255,.06);
+  color: var(--txt);
+  display:grid;
+  place-items:center;
+  cursor:pointer;
+  flex:0 0 auto;
+}
+.xBtn:hover{ background: rgba(255,255,255,.10); }
+
+.modal-body{
+  padding:16px;
+}
+.modal-textarea{
+  width:100%;
+  min-height:220px;
+  resize:vertical;
+  padding:12px 12px;
+  border-radius:14px;
+  border:1px solid rgba(255,255,255,.14);
+  background: rgba(6,10,20,.55);
+  color: var(--txt);
+  outline:none;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono";
+  font-size:12px;
+  line-height:1.35;
+}
+.modal-textarea:focus{
+  outline: 2px solid rgba(35,197,94,.35);
+  outline-offset: 1px;
+}
+.modal-actions{
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+  justify-content:flex-end;
+  margin-top:12px;
+}
+.modal-hint{
+  margin-top:10px;
+  font-size:12px;
+  color: var(--muted);
+}
+
+.modalTitle{ font-weight:800; font-size:14px; }
+.modalSub{ margin-top:4px; font-size:12px; color: var(--muted); }
+.modal-row{ display:flex; justify-content:flex-end; }
+
+
+/* =========================
+   FIXES (legibilidad + layout solicitud)
+========================= */
+
+/* Asegurar colores (Bootstrap a veces pisa títulos) */
+.card, .card * { color: var(--txt); }
+.muted { color: rgba(233,242,255,.78) !important; }
+.card h2, .card h3 { color: var(--txt) !important; }
+
+/* Mensajes/estado */
+#statusBar{ color: rgba(233,242,255,.85) !important; }
+#errorsPanel{ color: rgba(233,242,255,.88) !important; }
+.errLine{ color: rgba(255,180,180,.92) !important; }
+.okLine{ color: rgba(190,255,220,.92) !important; }
+
+/* Grid de Solicitud (estaba sin estilos) */
+.solGrid{
+  display:grid;
+  grid-template-columns: minmax(260px, 1.2fr) minmax(180px, .7fr) minmax(320px, 1.6fr) auto;
+  gap:14px;
+  align-items:end;
+}
+.solGrid .field{ min-width: 0; }
+.solGrid .field.wide{ grid-column: 3 / span 2; }
+.solGrid .btnCol{
+  display:flex;
+  gap:10px;
+  align-items:center;
+  justify-content:flex-end;
+  flex-wrap:wrap;
+  padding-top: 18px; /* alinear con inputs */
+}
+
+/* En pantallas chicas, todo en columna */
+@media (max-width: 980px){
+  .solGrid{ grid-template-columns: 1fr; }
+  .solGrid .field.wide{ grid-column: auto; }
+  .solGrid .btnCol{ justify-content:flex-start; padding-top: 0; }
+}
+
+/* Botones (separación) */
+.btn{ margin: 0 !important; }
+
+/* Mejor contraste para textos de estado/validación */
+.statusBar{ 
+  color:#eaf0ff;
+  padding:10px 12px; 
+  border-radius:12px;
+  border:1px solid rgba(255,255,255,.12);
+  background: rgba(6,10,20,.45);
+}
+.statusBar.ok{ 
+  border-color: rgba(77,163,255,.35); 
+  background: rgba(77,163,255,.08); 
+  color: #dff2ff;
+}
+.statusBar.err{ 
+  border-color: rgba(239,68,68,.55); 
+  background: rgba(239,68,68,.08); 
+}
+.statusBar.warn{ 
+  border-color: rgba(234,179,8,.55); 
+  background: rgba(234,179,8,.08); 
+}
+.statusBar .muted{ color: rgba(234,240,255,.82) !important; }
+
+.row4 .field.lastSap{min-width:420px}
